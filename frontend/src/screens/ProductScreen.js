@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {
   Row,
@@ -9,14 +10,30 @@ import {
   Button,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
 
 // A match object contains information about how a <Route path> matched the URL. Match objects contain - params - (object) key/value paies parsed from URL., is Exact, path, url.
 
-// .find returns the value of the first element in the provided array.
+// .find returns the value of the first element in the provided array that satisfies the function.
 
 const ProductScreen = ({ match }) => {
-  const product = products.find((p) => p._id === match.params.id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(
+        `/api/products/${match.params.id}`
+      );
+
+      setProduct(data);
+    };
+
+    fetchProduct();
+  }, []);
+
+  // Fetching from backend now
+  // const product = products.find((p) => p._id === match.params.id);
+  // console.log(match);
+  // console.log(product);
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
