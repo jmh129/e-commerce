@@ -28,7 +28,7 @@ const ProductScreen = ({ match }) => {
     };
 
     fetchProduct();
-  }, []);
+  }, [match]);
 
   // Fetching from backend now
   // const product = products.find((p) => p._id === match.params.id);
